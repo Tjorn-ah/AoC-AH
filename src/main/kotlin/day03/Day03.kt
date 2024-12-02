@@ -1,4 +1,4 @@
-package day02
+package day03
 
 import readInput
 import println
@@ -15,13 +15,13 @@ fun main() {
     }
 
     // Test if implementation meets criteria from the challenge description, like:
-    val testInput = readInput("day02", "day02_test")
+    val testInput = readInput("day03", "day03_test")
     val testAnswerPartOne = 0
     val testAnswerPartTwo = 0
     check(part1(testInput) == testAnswerPartOne) { "answer to test one is wrong" }
     check(part2(testInput) == testAnswerPartTwo) { "answer to test two is wrong" }
 
-    val input = readInput("day02", "day02")
+    val input = readInput("day03", "day03")
     part1(input).println()
     part2(input).println()
 }

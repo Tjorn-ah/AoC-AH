@@ -16,8 +16,10 @@ fun main() {
 
     // Test if implementation meets criteria from the challenge description, like:
     val testInput = readInput("dayX", "DayX_test")
-    val testAnswer = 0
-    check(part1(testInput) == testAnswer) { "answer to test is wrong" }
+    val testAnswer1 = 0
+    val testAnswer2 = 0
+    check(part1(testInput) == testAnswer1) { "answer to test1 is wrong" }
+    check(part2(testInput) == testAnswer2) { "answer to test2 is wrong" }
 
     val input = readInput("dayX", "DayX")
     part1(input).println()

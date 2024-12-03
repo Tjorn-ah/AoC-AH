@@ -32,7 +32,6 @@ fun main() {
         inputFixed.forEach {
             for(i in it.indices){
                 val listWithOneRemoved: List<Int> = it.toMutableList().apply { removeAt(i) }.toList()
-                println(listWithOneRemoved)
                     if (listWithOneRemoved.isSafeAscending() || listWithOneRemoved.isSafeDescending()) {
                         safeCount++
                         break

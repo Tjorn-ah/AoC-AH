@@ -80,11 +80,18 @@ fun main() {
         return ans
     }
 
-    fun crossCount (grid : Array<CharArray>, aLocations: ArrayList<IntArray>, mLocations: ArrayList<IntArray>, sLocations: ArrayList<IntArray>, directions: Pair<IntArray, IntArray>): Int {
+    fun crossCount (grid : Array<CharArray>, aLocations: ArrayList<IntArray>): Int {
         var count = 0
-        // TODO in each a location (x and y coordinates), check directions if there is a M and S in the same direction
-        // if there is, increment count
-
+        for(i in 0..aLocations.size-1){
+            val x = aLocations[i][0]
+            val y = aLocations[i][1]
+                val leftAbove = Pair(-1, -1)
+                val leftBelow = Pair(-1, 1)
+                val rightAbove = Pair(1, -1)
+                val rightBelow = Pair(1, 1)
+                // if left above is M, right below is S and if right above is M, left below is S
+                // Should also work in reverse, aka left above is M, right below is S and if right above is S, left below is M
+        }
 
         return count
     }
@@ -105,17 +112,14 @@ fun main() {
 
     fun part2(input: List<String>): Int {
         val grid = initializeGrid(input)
-        val x: IntArray = intArrayOf(-1, -1, 1, 1)
-        val y: IntArray = intArrayOf(-1, 1, -1, 1)
-        val directions = Pair(x, y)
-
         val aLocations = getAllLetterLocations(grid, 'A')
-        val mLocations = getAllLetterLocations(grid, 'M')
-        val sLocations = getAllLetterLocations(grid, 'S')
 
+        val crossCount = crossCount(grid, aLocations)
+
+        println("Crosscount is $crossCount")
 
         // Solution for part 2
-        return ans.size
+        return crossCount
     }
 
     // Test if implementation meets criteria from the challenge description, like:

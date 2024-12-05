@@ -68,7 +68,7 @@ fun main() {
     fun getAllLetterLocations(grid: Array<CharArray>, letter: Char): ArrayList<IntArray> {
         val m = grid.size
         val n = grid[0].size
-        val ans : ArrayList<IntArray> = ArrayList()
+        val ans: ArrayList<IntArray> = ArrayList()
 
         for (i in 0 until m) {
             for (j in 0 until n) {
@@ -80,19 +80,56 @@ fun main() {
         return ans
     }
 
-    fun crossCount (grid : Array<CharArray>, aLocations: ArrayList<IntArray>): Int {
+    fun crossCount(grid: Array<CharArray>, aLocations: ArrayList<IntArray>): Int {
         var count = 0
-        for(i in 0..aLocations.size-1){
+        for (i in 0 until aLocations.size) {
             val x = aLocations[i][0]
             val y = aLocations[i][1]
-                val leftAbove = Pair(-1, -1)
-                val leftBelow = Pair(-1, 1)
-                val rightAbove = Pair(1, -1)
-                val rightBelow = Pair(1, 1)
-                // if left above is M, right below is S and if right above is M, left below is S
-                // Should also work in reverse, aka left above is M, right below is S and if right above is S, left below is M
-        }
+            val leftAbove = Pair(x - 1, y - 1)
+            val leftBelow = Pair(x - 1, y + 1)
+            val rightAbove = Pair(x + 1, y - 1)
+            val rightBelow = Pair(x + 1, y + 1)
 
+            val a = listOf(
+                if (validCoord(
+                        leftBelow.first,
+                        leftBelow.second,
+                        grid.size,
+                        grid[0].size
+                    )
+                ) grid[leftBelow.first][leftBelow.second] else ' ',
+                'A',
+                if (validCoord(
+                        rightAbove.first,
+                        rightAbove.second,
+                        grid.size,
+                        grid[0].size
+                    )
+                ) grid[rightAbove.first][rightAbove.second] else ' '
+            ).joinToString("").trim()
+
+            val b = listOf(
+                if (validCoord(
+                        rightBelow.first,
+                        rightBelow.second,
+                        grid.size,
+                        grid[0].size
+                    )
+                ) grid[rightBelow.first][rightBelow.second] else ' ',
+                'A',
+                if (validCoord(
+                        leftAbove.first,
+                        leftAbove.second,
+                        grid.size,
+                        grid[0].size
+                    )
+                ) grid[leftAbove.first][leftAbove.second] else ' '
+            ).joinToString("").trim()
+
+            if ((a == "MAS" || a.reversed() == "MAS") && (b == "MAS" || b.reversed() == "MAS")) {
+                count++
+            }
+        }
         return count
     }
 

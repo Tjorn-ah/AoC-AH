@@ -4,14 +4,14 @@ import readInput
 import println
 
 fun main() {
-    fun validCoord(x: Int, y: Int, m: Int, n: Int): Boolean {
-        return x >= 0 && x < m && y >= 0 && y < n
+    fun isValidCoordinate(x: Int, y: Int, rows: Int, cols: Int): Boolean {
+        return x in 0..<rows && y >= 0 && y < cols
     }
 
     fun findWord(index: Int, word: String, grid: Array<CharArray>, x: Int, y: Int, dirX: Int, dirY: Int): Boolean {
         if (index == word.length) return true
 
-        if (validCoord(x, y, grid.size, grid[0].size) &&
+        if (isValidCoordinate(x, y, grid.size, grid[0].size) &&
             word[index] == grid[x][y]
         )
             return findWord(
@@ -39,7 +39,7 @@ fun main() {
         for (i in 0 until m) {
             for (j in 0 until n) {
                 // Search in all directions
-                for (k in 0 until x.size) {
+                for (k in x.indices) {
                     if (findWord(0, word, grid, i, j, x[k], y[k])) {
                         ans.add(intArrayOf(i, j))
                         if (unique) break
@@ -82,48 +82,27 @@ fun main() {
 
     fun crossCount(grid: Array<CharArray>, aLocations: ArrayList<IntArray>): Int {
         var count = 0
-        for (i in 0 until aLocations.size) {
-            val x = aLocations[i][0]
-            val y = aLocations[i][1]
+        for (location in aLocations) {
+            val (x, y) = location
             val leftAbove = Pair(x - 1, y - 1)
             val leftBelow = Pair(x - 1, y + 1)
             val rightAbove = Pair(x + 1, y - 1)
             val rightBelow = Pair(x + 1, y + 1)
 
             val a = listOf(
-                if (validCoord(
-                        leftBelow.first,
-                        leftBelow.second,
-                        grid.size,
-                        grid[0].size
-                    )
-                ) grid[leftBelow.first][leftBelow.second] else ' ',
+                if (isValidCoordinate(leftBelow.first, leftBelow.second, grid.size, grid[0].size))
+                    grid[leftBelow.first][leftBelow.second] else ' ',
                 'A',
-                if (validCoord(
-                        rightAbove.first,
-                        rightAbove.second,
-                        grid.size,
-                        grid[0].size
-                    )
-                ) grid[rightAbove.first][rightAbove.second] else ' '
+                if (isValidCoordinate(rightAbove.first, rightAbove.second, grid.size, grid[0].size))
+                    grid[rightAbove.first][rightAbove.second] else ' '
             ).joinToString("").trim()
 
             val b = listOf(
-                if (validCoord(
-                        rightBelow.first,
-                        rightBelow.second,
-                        grid.size,
-                        grid[0].size
-                    )
-                ) grid[rightBelow.first][rightBelow.second] else ' ',
+                if (isValidCoordinate(rightBelow.first, rightBelow.second, grid.size, grid[0].size))
+                    grid[rightBelow.first][rightBelow.second] else ' ',
                 'A',
-                if (validCoord(
-                        leftAbove.first,
-                        leftAbove.second,
-                        grid.size,
-                        grid[0].size
-                    )
-                ) grid[leftAbove.first][leftAbove.second] else ' '
+                if (isValidCoordinate(leftAbove.first, leftAbove.second, grid.size, grid[0].size))
+                    grid[leftAbove.first][leftAbove.second] else ' '
             ).joinToString("").trim()
 
             if ((a == "MAS" || a.reversed() == "MAS") && (b == "MAS" || b.reversed() == "MAS")) {
@@ -152,8 +131,6 @@ fun main() {
         val aLocations = getAllLetterLocations(grid, 'A')
 
         val crossCount = crossCount(grid, aLocations)
-
-        println("Crosscount is $crossCount")
 
         // Solution for part 2
         return crossCount
